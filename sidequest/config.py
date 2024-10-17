@@ -1,4 +1,4 @@
-CHROME_DRIVER_PATH = 'C:/Users/Brandon Le/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe'
+CHROME_DRIVER_PATH = 'path/to/chromedriver.exe'
 
 MAX_APPS = 200
 
