@@ -15,11 +15,6 @@ def get_reddit_instance():
     return praw.Reddit(**CLIENT_INFO)
 
 def clean_text(text):
-    if not text:
-        return ''
-    return text.strip().replace('\r', '').replace('\n', ' ')
-
-def clean_post_body(text):
     clean_text = strip_markdown.strip_markdown(text) 
     clean_text = clean_text.strip().replace('\r', '') 
     clean_text = re.sub(' +', ' ', clean_text)  #  multiple spaces to a single space
@@ -101,7 +96,7 @@ def scrape_reddit(reddit, query, limit=MAX_POSTS, retries=MAX_RETRIES, delay=2):
                     'created_utc': submission.created_utc,
                     'num_comments': submission.num_comments,
                     'url': f"https://www.reddit.com{submission.permalink}",
-                    'selftext': clean_post_body(submission.selftext),
+                    'selftext': clean_text(submission.selftext),
                     'comments': comments
                 }
                 
