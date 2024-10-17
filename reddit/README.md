@@ -37,10 +37,10 @@ The scraper is designed to handle rate limiting and API restrictions by retrying
 
 To access the Reddit API, you will need to create a Reddit app and generate API credentials. Follow these steps:
 
-* Go to Reddit's App Preferences.
-* Click "Create App" or "Create Another App."
-* Choose the "Script" option and fill out the form with your app's details.
-* Copy the client_id, client_secret, and user_agent for use in your code.
+1. Go to Reddit's App Preferences.
+2. Click "Create App" or "Create Another App."
+3. Choose the "Script" option and fill out the form with your app's details.
+4. Copy the client_id, client_secret, and user_agent for use in your code.
 
 
 Update your `config.py` file with your credentials as follows:
