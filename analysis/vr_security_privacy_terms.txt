@@ -1,0 +1,79 @@
+security
+privacy
+compliance
+vulnerability
+vulnerabilities
+harvesting
+data harvest
+data breach
+hacking
+hacker
+cybersecurity
+encryption
+unauthorized access
+authentication
+exploitation
+malware
+phishing
+ransomware
+intrusion detection
+firewall
+backdoor
+spyware
+DDoS
+Distributed Denial of Service
+attack surface
+man-in-the-middle
+MITM
+privacy
+selling data
+collecting data
+personal data
+personal information
+PII
+Personally Identifiable Information
+GDPR
+General Data Protection Regulation
+surveillance
+location tracking
+facial recognition
+biometric
+biometric data
+fingerprint
+camera access
+microphone access
+user consent
+anonymity
+data sharing
+data storage
+data retention
+third-party access
+data ownership
+motion tracking
+headset tracking
+motion data
+sensor data
+eye tracking
+eye-tracking
+gaze tracking
+compromised
+VR malware
+device compromise
+virtual environment security
+AR/VR spoofing
+immersive attacks
+VR phishing
+social engineering
+virtual identity theft
+in-game fraud
+VR user profiling
+data injection
+virtual simulations
+AI integration
+deepfake
+digital twins
+augmented reality security
+AR security
+metaverse security
+blockchain security
+smart contract vulnerabilities

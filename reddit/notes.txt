@@ -1,0 +1,11 @@
+Challenge #1: Efficiency vs Reliability
+- I tried implementing a multithreaded approach where I would scrape each topic separately with a thread; however, I got ratelimited (i.e. TooManyRequests exception)
+- To work around the rate limiting, I built a retry mechanism that attempts to scrape the topic after 60 seconds
+- Scraping 110 posts for VR security & privacy takes 2511 seconds (41 minutes) to complete
+- Scraping 100 posts for Android security & privacy takes 2037 seconds (33 minutes) to complete
+
+
+Challenge #2: Replies... formatting
+- The way the reddit API returns comments is that the top-level comments are always returned first in order THEN the replies are returned in their order. 
+- CSVs are not cutting it; we should just convert to .txt files for readability and ease of indentation. For analysis sake, we can still use .csv files and place all the comments under a "comments" column; however, we as humans won't be able to read it properly/efficiently.
+

@@ -1,0 +1,78 @@
+1. privacy: 395
+2. security: 265
+3. encryption: 59
+4. eye tracking: 51
+5. anonymity: 25
+6. personal data: 20
+7. hacker: 19
+8. firewall: 17
+9. GDPR: 14
+10. compliance: 13
+11. harvesting: 13
+12. personal information: 13
+13. surveillance: 11
+14. compromised: 11
+15. cybersecurity: 9
+16. collecting data: 9
+17. biometric: 9
+18. malware: 8
+19. backdoor: 8
+20. fingerprint: 8
+21. hacking: 7
+22. selling data: 7
+23. authentication: 6
+24. deepfake: 6
+25. data harvest: 5
+26. PII: 5
+27. motion data: 5
+28. eye-tracking: 5
+29. vulnerabilities: 4
+30. exploitation: 4
+31. data breach: 3
+32. unauthorized access: 3
+33. spyware: 3
+34. social engineering: 3
+35. DDoS: 2
+36. facial recognition: 2
+37. data storage: 2
+38. AI integration: 2
+39. digital twins: 2
+40. vulnerability: 1
+41. motion tracking: 1
+42. sensor data: 1
+43. AR security: 1
+44. phishing: 0
+45. ransomware: 0
+46. intrusion detection: 0
+47. Distributed Denial of Service: 0
+48. attack surface: 0
+49. man-in-the-middle: 0
+50. MITM: 0
+51. Personally Identifiable Information: 0
+52. General Data Protection Regulation: 0
+53. location tracking: 0
+54. biometric data: 0
+55. camera access: 0
+56. microphone access: 0
+57. user consent: 0
+58. data sharing: 0
+59. data retention: 0
+60. third-party access: 0
+61. data ownership: 0
+62. headset tracking: 0
+63. gaze tracking: 0
+64. VR malware: 0
+65. device compromise: 0
+66. virtual environment security: 0
+67. AR/VR spoofing: 0
+68. immersive attacks: 0
+69. VR phishing: 0
+70. virtual identity theft: 0
+71. in-game fraud: 0
+72. VR user profiling: 0
+73. data injection: 0
+74. virtual simulations: 0
+75. augmented reality security: 0
+76. metaverse security: 0
+77. blockchain security: 0
+78. smart contract vulnerabilities: 0

@@ -1,0 +1,34 @@
+Challenge #1: Tackling Lazy Loading
+- window.scrollTo and window.scrollBy does NOT work
+- Capped at 22 apps
+- the "body" element does not control the scrolling of the page
+- Reason: The previously loaded content is likely being removed from the DOM due to how lazy loading works on the site.
+- Solution: Make a variable that keeps track of ALL the titles found, keep adding onto the variable until 100 games are found.
+
+Challenge #2: Finding Relevant Results
+- Was previously using default URL: https://sidequestvr.com/category/all
+- Changed to https://sidequestvr.com/category/all?sortOn=downloads
+- Result: Successfully found reviews of 100+ unique games
+
+Challenge #3: Limited to three reviews
+- Cookie banner was blocking the 'Load more' button -- automated a function to press it after it loaded
+- Pressed Load More three times
+- Obtained 10 reviews per game
+
+Challenge #4: Error parsing review (i.e. if an element is not found)
+- Error parsing review from peter: 'NoneType' object has no attribute 'text'
+- To counteract this, i ensured an alternative solution if an element isn't found. For instance, reviews can have no ratings, thus I made a default "No rating" text.
+
+Challenge #5: Why is it erroring? (i.e. not able to find cookie banners or load more reviews)
+- Problem: There are actually too many instances of web drivers when we use 10 threads. This causes instances to essentially crash due to limited CPU usage.
+- The issue stems from resource contention or some concurrency problems when running more threads. Running too many threads simultaneously may cause various issues, such as drivers competing for system resources, or hitting rate limits, or possibly Selenium itself not handling too many browser instances well. 
+- Solution: Lower the number of threads; the trade-off is its slightly slower (i.e. 833.09 seconds for 105 apps / 10 reviews ~ 5 threads vs 620 seconds for 105A/10R ~ 10 threads) but its more reliable
+
+
+Challenge #6: What if I wanted to get all reviews?
+- Scraping all reviews by consistenly pressing load_more takes FOREVER
+- Heres my solution and how I came across it:
+    - I looked into the Network tab of the browser and found that the API that was returning all the reviews to the page
+    - https://api.sidequestvr.com/v2/apps/7150/posts?skip=0&limit=None&descending=true%2Ctrue%2Ctrue%2Ctrue&sortOn=is_verified_review&post_categories_id=19862
+    - The limit is 3 for a single request, but I can change it to None and scrap all the reviews from there. 
+    
