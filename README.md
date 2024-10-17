@@ -16,5 +16,5 @@ These two reports focus on the data analysis and development of the web crawlers
 2. [Research Report](https://drive.google.com/file/d/129BE5oFergkfUDF25fY4kBE4ZUkU3Hst/view?usp=sharing)
 
 ### License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/brandontranle/scraper/blob/master/LICENSE) file for details.
 
