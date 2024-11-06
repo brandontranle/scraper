@@ -15,7 +15,7 @@ A Python-based Reddit scraper that collects and analyzes data from Reddit using 
 To install the necessary dependencies, run:
 
 ```bash
-pip install praw pandas strip_markdown
+pip install praw pandas strip_markdown tqdm
 ```
 
 ## How does it work?
