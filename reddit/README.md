@@ -62,6 +62,12 @@ TOPICS_WITH_FILENAMES = [
 ]
 ```
 
+If you want to scrape only subreddits, set the `TOPIC_WITH_FILENAMES` variable to `[]` and populate the `SUBREDDITS` array.
+```
+TOPIC_WITH_FILENAMES = []
+SUBREDDITS = ['sub1', 'sub2']
+```
+
 Adjust file extension if necessary (supports txt or csv)
 ```
 FILE_TYPE = 'txt' #no '.' necessary
