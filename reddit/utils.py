@@ -6,7 +6,7 @@ import pandas as pd
 import csv
 import re
 import os
-from config import CLIENT_INFO, KEY_WORDS, MAX_POSTS, MAX_RETRIES, TXT_DIR, CSV_DIR, FILE_TYPE, TOPICS_WITH_FILENAMES, SUBREDDITS
+from config import CLIENT_INFO, KEY_WORDS, MAX_POSTS, MAX_RETRIES, TXT_DIR, CSV_DIR, FILE_TYPE, TOPICS_WITH_FILENAMES, SUBREDDITS, MULTI_REDDIT_USER, MULTI_REDDIT_NAME
 from praw.models import MoreComments
 import strip_markdown
 import time
@@ -217,11 +217,57 @@ def scrape(reddit, topics_with_files=TOPICS_WITH_FILENAMES, limit=MAX_POSTS, del
 
     print(f"Scraping completed in {elapsed_time:.2f} seconds.")
 '''
-def scrape(reddit, topics_with_files=TOPICS_WITH_FILENAMES, subreddits=SUBREDDITS, limit=MAX_POSTS, delay=2, file_type=FILE_TYPE):
+
+def scrape_reddit_multireddit(reddit, user, multireddit_name, limit=MAX_POSTS, retries=MAX_RETRIES, delay=2):
+    posts = []
+    multireddit = reddit.multireddit(user, multireddit_name)
+    print(f"Scraping posts from multireddit: {user}/{multireddit_name}")
+
+    try:
+        for submission in tqdm(multireddit.hot(limit=limit), desc=f"Scraping {user}/{multireddit_name}", unit="post"):
+            time.sleep(delay)
+
+            comments = scrape_comments(submission)
+
+            post = {
+                'title': submission.title,
+                'author': submission.author.name if submission.author else 'N/A',
+                'subreddit': submission.subreddit.display_name,
+                'score': submission.score,
+                'created_utc': submission.created_utc,
+                'num_comments': submission.num_comments,
+                'url': f"https://www.reddit.com{submission.permalink}",
+                'selftext': clean_text(submission.selftext),
+                'comments': comments
+            }
+
+            posts.append(post)
+    except TooManyRequests as e:
+        if retries > 0:
+            wait_time = int(e.response.headers.get("retry-after", 60))
+            print(f"Rate-limited while scraping posts. Retrying after {wait_time} seconds...")
+            time.sleep(wait_time)
+            return scrape_reddit_multireddit(reddit, user, multireddit_name, limit, retries=retries - 1, delay=delay)
+        else:
+            print("Maximum retries reached for this multireddit. Skipping...")
+    return posts
+
+
+def scrape(reddit, topics_with_files=TOPICS_WITH_FILENAMES, subreddits=SUBREDDITS, limit=MAX_POSTS, delay=2, file_type=FILE_TYPE, multireddit_user=MULTI_REDDIT_USER, multireddit_name=MULTI_REDDIT_NAME):
     start_time = time.time()
     
-    # Check if topics are provided; if so, prioritize topics
-    if topics_with_files:
+    # Check if a multireddit is specified
+    if multireddit_user and multireddit_name:
+        print("Scraping based on multireddit.")
+        posts = scrape_reddit_multireddit(reddit, multireddit_user, multireddit_name, limit, delay=delay)
+        filename = f"{multireddit_name}.{file_type}"
+        if file_type == 'txt':
+            save_to_txt(posts, filename)
+        elif file_type == 'csv':
+            save_to_csv(posts, filename)
+    
+    # Otherwise, proceed with topic or subreddit scraping
+    elif topics_with_files:
         print("Scraping based on topics.")
         with ThreadPoolExecutor() as executor:
             futures = []

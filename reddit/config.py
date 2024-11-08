@@ -1,14 +1,14 @@
 KEY_WORDS = ['vr', 'android', 'security', 'privacy']
 
 CLIENT_INFO = {
-    'client_id': '''', 
-    'client_secret': '''', 
-    'username': "''", 
-    'password': "''", 
-    'user_agent': '''',
+    'client_id': '', 
+    'client_secret': '', 
+    'username': "", 
+    'password': "", 
+    'user_agent': '',
 }
 
-MAX_POSTS = 110
+MAX_POSTS = 1000
 
 MAX_RETRIES = 5
 
@@ -16,8 +16,7 @@ MAX_RETRIES = 5
 CSV_DIR = './output/csv/'
 TXT_DIR = './output/txt/'
 
-FILE_TYPE = 'txt'
-
+FILE_TYPE = 'csv'
 
 # topics + .txt filenames 
 '''
@@ -27,6 +26,8 @@ FILE_TYPE = 'txt'
 
 TOPICS_WITH_FILENAMES = []
 
-SUBREDDITS = ['privacy', 'cybersecurity']
+#SUBREDDITS = ['privacy', 'cybersecurity']
+SUBREDDITS = []
 
-
+MULTI_REDDIT_USER = 'goretsky'
+MULTI_REDDIT_NAME = 'security'
