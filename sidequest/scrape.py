@@ -1,4 +1,4 @@
 
-from utils import scrape_sidequest
+from utils2 import scrape_sidequest
 
 scrape_sidequest()

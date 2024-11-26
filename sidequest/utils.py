@@ -17,7 +17,8 @@ import os
 def init_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    service = Service(CHROME_DRIVER_PATH)
+    print("Initializing Chrome driver.")
+    service = Service(r"C:\Users\brand\Downloads\chromedriver\chromedriver-win64\chromedriver.exe")
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
@@ -55,10 +56,11 @@ def page_down_to_load_apps(driver, max_apps=MAX_APPS):
             if app_id not in unique_apps:
                 app_divs.append(app)
                 unique_apps.add(app_id)
-
+                '''
                 if len(app_divs) >= max_apps:
                     print(f"Loaded the maximum of {max_apps} apps. Stopping.")
                     return app_divs
+                '''
 
         print(f"Loaded {len(app_divs)} unique apps so far.")
 
@@ -67,6 +69,17 @@ def page_down_to_load_apps(driver, max_apps=MAX_APPS):
             break
 
     return app_divs
+
+def fetch_all_games():
+    all_games = []
+    limit = 6397
+    max_retries = 5
+    base_delay = 1.0
+    max_delay = 30.0
+
+    api_url = "https://api.sidequestvr.com/v2/apps?limit=10000&sortOn=hot_sort_rating&descending=true"
+    
+
 
 def write_reviews_to_csv(all_reviews):
     os.makedirs(DIRECTORY, exist_ok=True)
@@ -79,10 +92,16 @@ def write_reviews_to_csv(all_reviews):
             writer.writerow(review)
 
 
+import random
+import time
+
 def fetch_all_reviews_from_api(app_id, app_name):
     all_reviews = []
     limit = 200  # maximum payload size
     skip = 0
+    max_retries = 5  # Maximum number of retries for a failed request
+    base_delay = 1.0  # Base delay in seconds for retries
+    max_delay = 30.0  # Maximum delay in seconds
 
     print(f"Fetching reviews for {app_name}.")
 
@@ -95,22 +114,40 @@ def fetch_all_reviews_from_api(app_id, app_name):
             "sortOn": "is_verified_review",
         }
 
-        try:
-            response = requests.get(api_url, params=params)
-            if response.status_code == 200:
-                reviews = response.json()
-                if len(reviews) == 0:  # If no more reviews are returned, break out of the loop
-                    break
-                all_reviews.extend(reviews)
-                skip += limit  # Move to the next set of reviews
-            else:
-                print(f"Failed to fetch reviews for app ID {app_id}. Status Code: {response.status_code}")
-                break
-        except requests.exceptions.RequestException as e:
-            print(f"Request failed: {e}")
-            break
+        retries = 0
+        while retries < max_retries:
+            try:
+                response = requests.get(api_url, params=params)
+                if response.status_code == 200:
+                    reviews = response.json()
+                    if len(reviews) == 0:  # If no more reviews are returned, break out of the loop
+                        return app_name, all_reviews
+                    all_reviews.extend(reviews)
+                    skip += limit  # Move to the next set of reviews
 
-    return app_name, all_reviews
+                    # Random delay to avoid rate limiting
+                    delay = random.uniform(1, 3)
+                    time.sleep(delay)
+                    break  # Exit retry loop on success
+                elif response.status_code == 429:  # Too Many Requests
+                    print(f"Rate limited for {app_name}. Retrying after delay.")
+                    delay = min(base_delay * (2 ** retries), max_delay)
+                    time.sleep(delay)
+                    retries += 1
+                else:
+                    print(f"Failed to fetch reviews for app ID {app_id}. Status Code: {response.status_code}")
+                    return app_name, all_reviews
+            except requests.exceptions.RequestException as e:
+                print(f"Request failed: {e}. Retrying...")
+                delay = min(base_delay * (2 ** retries), max_delay)
+                time.sleep(delay)
+                retries += 1
+
+        if retries == max_retries:
+            print(f"Max retries reached for {app_name}. Stopping fetching for this app.")
+            return app_name, all_reviews
+        
+        return app_name, all_reviews
 
 def scrape_sidequest():
     start_time = time.time()
@@ -173,4 +210,5 @@ def scrape_sidequest():
     end_time = time.time()
     execution_time = end_time - start_time
     print(f"Scraping sidequest took {execution_time:.2f} seconds.")
-
+    time.sleep(5)  # Wait for 5 seconds before exiting
+    print("Exiting.")
